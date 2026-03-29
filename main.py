@@ -5,20 +5,29 @@ import streamlit as st
 st.set_page_config(page_title="Delta Exchange Funding Rates", layout="wide")
 st.title("📊 Delta Exchange – Funding Rate Scanner")
 
+
 # -----------------------------------
 # Fetch data from Delta Exchange API
 # -----------------------------------
 def fetch_data():
-    headers = {'Accept': 'application/json'}
-    r = requests.get('https://api.india.delta.exchange/v2/tickers', headers=headers)
+    headers = {"Accept": "application/json"}
+    r = requests.get("https://api.india.delta.exchange/v2/tickers", headers=headers)
     r.raise_for_status()
     data = r.json()
     return data.get("result", [])
 
+
 # -----------------------------------
 # Button to fetch & process data
 # -----------------------------------
-if st.button("🔄 Fetch Funding Rates"):
+isClosed = True
+
+if isClosed:
+    st.warning("This site has been permanantly shifted to https://aysm.in/fundings")
+    st.success("Thank you for your support till now, hope to see you in our new site 😊 ")
+
+
+elif st.button("🔄 Fetch Funding Rates"):
 
     with st.spinner("Fetching live data from Delta Exchange..."):
         tickers = fetch_data()
@@ -32,15 +41,17 @@ if st.button("🔄 Fetch Funding Rates"):
         funding_rate = coin.get("funding_rate")
 
         if funding_rate is not None:
-            coins_with_funding.append({
-                "symbol": coin.get("symbol"),
-                "underlying_asset_symbol": coin.get("underlying_asset_symbol"),
-                "funding_rate": funding_rate,
-                "mark_price": coin.get("mark_price"),
-                "spot_price": coin.get("spot_price"),
-                "oi_value_usd": coin.get("oi_value_usd"),
-                "time": coin.get("time")
-            })
+            coins_with_funding.append(
+                {
+                    "symbol": coin.get("symbol"),
+                    "underlying_asset_symbol": coin.get("underlying_asset_symbol"),
+                    "funding_rate": funding_rate,
+                    "mark_price": coin.get("mark_price"),
+                    "spot_price": coin.get("spot_price"),
+                    "oi_value_usd": coin.get("oi_value_usd"),
+                    "time": coin.get("time"),
+                }
+            )
 
     # -----------------------------------
     # Create DataFrame
