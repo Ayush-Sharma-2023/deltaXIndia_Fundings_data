@@ -103,11 +103,23 @@
 
 import streamlit as st
 
-REDIRECT_URL = "https://aysm.in/fundings"
+st.set_page_config(layout="centered")
 
-st.markdown(
-    f"""
-    <meta http-equiv="refresh" content="0; url={REDIRECT_URL}">
-    """,
-    unsafe_allow_html=True
-)
+st.title("🚀 We've Moved!")
+
+st.markdown("## This app is now available on our new platform")
+
+st.link_button("👉 Open New Site", "https://aysm.in/fundings")
+
+# st.markdown("### Redirecting you in 3 seconds...")
+
+# st.markdown(
+#     """
+#     <script>
+#         setTimeout(function() {
+#             window.open("https://aysm.in/fundings", "_blank");
+#         }, 3000);
+#     </script>
+#     """,
+#     unsafe_allow_html=True
+# )
